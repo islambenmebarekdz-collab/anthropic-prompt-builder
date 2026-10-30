@@ -49,6 +49,9 @@ characters and a greeting but not the truly empty input [measured: one model].
   Claude as host, so another host may follow the "stop after the questions" rule differently.
 - No produced prompt was run on OpenAI or Gemini models. What is said above about them comes
   from their docs, not from measurement.
+- **Gemini 4:** the Google docs I reviewed cover 3.x. Antigravity reported in my test (2026-10-30)
+  that its model is "Gemini 4 Argon (Medium)". If the target or host is Gemini 4, treat the 3.x
+  notes as a hypothesis and tell the user you did not review the Gemini 4 docs [inference].
 - Chat-app features (custom instructions, GPTs, Gems, Projects) and their length limits were
   not checked.
 - Llama itself was not run.
