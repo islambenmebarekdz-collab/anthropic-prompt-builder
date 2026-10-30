@@ -55,8 +55,12 @@ Then ask Claude for a prompt: "write me a system prompt that …".
   request, English prompt for Arabic-speaking users, prefill trap, non-Claude target — read
   by hand. Two defects found that way were fixed and the two affected cases re-run.
 - **Not tested:** the request to "think inside `<thinking>` tags" — the platform's safeguard
-  rejected that test message before the skill ran. No prompt it produced was run on its
-  intended target model, and it was not tested with a screen reader.
+  rejected that test message before the skill ran. It was not tested with a screen reader.
+- **Prompts it produced, run on their intended model:** two prompts targeting Claude (a
+  customer-support assistant and a JSON sentiment classifier) were run on Claude Sonnet 5.5
+  over nine inputs including off-topic, prompt-injection, empty and sarcastic cases. All nine
+  behaved as specified, and every JSON reply parsed with the expected keys. A prompt it wrote
+  for a Llama target has **not** been run on Llama.
 - The model-specific rules reflect Anthropic's documentation as of **2026-10-30** and will go
   stale as models change. Treat `references/elements.md` as the place to update.
 - Every prompt it produces is a hypothesis until you try it on your own inputs.
