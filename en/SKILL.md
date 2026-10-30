@@ -89,6 +89,11 @@ slim it down. **A simple request deserves a short prompt**, not the full skeleto
 - **Prevent hallucination** [ch. 8]: if the task depends on a document, give the model an
   "out" ("if you cannot find the answer in the text, say so") and ask it to extract the
   relevant quotes first, then answer.
+- **Edge cases stated explicitly:** in `<constraints>`, define what the model does when the
+  input is empty, off-topic or ambiguous, one line per case, or it will improvise. In a trial
+  on Gemma 4 12B (built-in thinking) the model spent about 4,000 tokens thinking on an empty
+  input without ever answering, and a single line defining the case ended that in 238 tokens
+  [measured: one model].
 - **Variables:** written `{{descriptive_name}}` in English (`{{customer_email}}`, not
   `{{x}}`), and listed after the prompt. Fix typos in your own prompt; the model is
   sensitive to pattern [ch. 4].
@@ -112,7 +117,9 @@ models, and `<thinking>` is only one example of that.
   control lives, not in the prompt.
 - **Older Claude, or a non-Claude model:** use manual reasoning: "think first inside
   `<reasoning>`, then put the final answer in `<answer>`". The two tags let the user's
-  program extract the answer.
+  program extract the answer. If the target has built-in thinking (I tried Gemma 4 12B), warn
+  the user to leave `max_tokens` room for the internal thinking before the output, since it
+  can consume the whole budget and return an empty reply [measured: one model].
 - **Self-check** ("before you finish, verify your answer against such-and-such") helps in
   general, so keep it, **except with Opus 5**, which verifies its own work, so the instruction
   causes over-verification: remove it there.

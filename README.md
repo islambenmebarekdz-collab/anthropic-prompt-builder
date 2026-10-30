@@ -59,8 +59,12 @@ Then ask Claude for a prompt: "write me a system prompt that …".
 - **Prompts it produced, run on their intended model:** two prompts targeting Claude (a
   customer-support assistant and a JSON sentiment classifier) were run on Claude Sonnet 5.5
   over nine inputs including off-topic, prompt-injection, empty and sarcastic cases. All nine
-  behaved as specified, and every JSON reply parsed with the expected keys. A prompt it wrote
-  for a Llama target has **not** been run on Llama.
+  behaved as specified, and every JSON reply parsed with the expected keys. A third prompt,
+  written for an open-source target, was run on Gemma 4 12B (local, LM Studio) over six inputs:
+  five followed the format, but an empty input made the model's built-in thinking spin for
+  ~4,000 tokens with no answer. The prompt had no rule for empty input; adding one line fixed
+  it (238 tokens, correct answer), and the skill now requires edge cases to be stated. Not run
+  on Llama itself.
 - The model-specific rules reflect Anthropic's documentation as of **2026-10-30** and will go
   stale as models change. Treat `references/elements.md` as the place to update.
 - Every prompt it produces is a hypothesis until you try it on your own inputs.
