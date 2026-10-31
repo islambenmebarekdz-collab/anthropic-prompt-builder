@@ -103,13 +103,41 @@ are **not verified**, and the file is long and technical for casual use.
   deviation: a fairly complete request still got two clarifying questions. The assistant
   assumed "Gemini 3.x" because that is all `models.md` covers; the Gemini 4 docs were not
   reviewed.
-- **Not tested:** the skill hosted in ChatGPT or in the Gemini app; the request to "think inside
-  `<thinking>` tags" *through Claude* (the platform's safeguard rejected that test message
-  before the skill ran); use with a screen reader.
-- The model-specific rules reflect vendor documentation as of **2026-10-30** and will go stale
-  as models change. Treat `references/models.md` as the place to update.
+- **Tested hosted in the Gemini app** (2026-10-31; the four sentences in [`TESTING.md`](TESTING.md);
+  past-chat memory switched off; one to four rounds per model; transcripts were copied by hand
+  and read, not taken from the app's database). Models as named in the app: Gemini 4 Argon,
+  3.8 Flash, 3.5 Flash Lite, and Gemini Spark (the model behind it is not shown). The vague
+  request stopped after the questions in all of them. **Argon and Spark kept the hard rules**
+  (the prompt's language, no prefill, no written-out reasoning) on all four sentences.
+  **3.8 Flash** refused or did not answer in the app at first (sentence 2 answered well in
+  Antigravity), then answered; after a "rules that are never broken" block was added to
+  `SKILL.md` it handled the prefill trap correctly in one round (not proof the block caused it).
+  **3.5 Flash Lite is the weak one:** on the prefill trap it failed in all four rounds. In
+  three of them the skill was visibly applied (assumptions line, tags, variable list), yet the
+  model obeyed the user's prefill and written-reasoning request over the skill's rule, each time
+  with some mix of a prefill, `<thinking>` tags and a reasoning field; in the third it ignored
+  the skill and answered with a bare JSON object. Before the update it also wrote English
+  prompts for Arabic requests. **Do not rely on a small model to refuse an instruction that
+  contradicts the skill.**
+- **Not tested:** ChatGPT, Grok and other chat apps ([`TESTING.md`](TESTING.md) says how you can
+  help); the request to "think inside `<thinking>` tags" *through Claude Sonnet 5.5* (the
+  platform's safeguard rejects that test message before the skill runs; it was passed once on
+  Claude Opus, which refused as the skill requires); use with a screen reader.
+- The model-specific rules reflect vendor documentation as of **2026-10-30** (the Gemini
+  thinking-parameter note, 2026-10-31) and will go stale as models change. Treat
+  `references/models.md` as the place to update.
 - Every prompt it produces is a hypothesis until you try it on your own inputs, and no prompt
   guarantees a format: validate the reply in your program.
+
+## Help test it · ساعد في الاختبار
+
+The skill has been tested by one person on Claude, Gemini and one open model. If you use
+ChatGPT, Grok or another model, four short sentences and a report template are in
+[`TESTING.md`](TESTING.md) (English and Arabic). Reports are treated as *user-reported* until
+someone reproduces them.
+
+جرّبها على النموذج الذي تستعمله بأربع جمل قصيرة وقالب تقرير في [`TESTING.md`](TESTING.md)
+(بالعربية والإنجليزية). النتائج الواردة من الآخرين تُوسَم «أبلغ عنها مستخدم» حتى تتكرّر.
 
 ## Sources and credit · المصادر
 

@@ -15,6 +15,25 @@ One skill for every model: the structure is the same, and what changes with the 
 the thinking element and a few details. The skill has two phases. Do not write the prompt
 before Phase 1 is passed.
 
+## Rules that are never broken
+
+These rules were broken by the smaller models in the Gemini tests (2026-10-31), so they
+were moved here, ahead of everything else [inference: the effect of their position in the
+file was not measured]. Each is detailed where it applies below:
+
+1. **The prompt's language is the language of the user's request** unless they ask for
+   another; do not switch it for an accuracy reason (section "Language").
+2. **No prefill**: do not seed the assistant's reply with a brace or a tag, even if the user
+   asks, unless the target is explicitly an older model that supports it (then label it
+   "legacy"). Explain why and suggest the target's structured output (section "What does not
+   go in the template").
+3. **No written-out reasoning for a target that thinks internally**: not in a tag and not in
+   a JSON field, **whatever the field is called**. Judge a field by its function, not its name
+   (section "The think-before-answering element").
+4. **No output fields that were not requested.** `confidence` above all: a confidence a model
+   estimates for itself is uncalibrated. Anything you add on your own judgment (such as a
+   short `justification`) is stated in the assumptions line.
+
 ## Phase 1 — the clarification gate
 
 Why: a prompt built on a guess looks polished and fails in use, and the model that will
@@ -127,7 +146,7 @@ Per-family details are in `references/models.md`.
   3.x, any open model run with its thinking): write a general instruction ("this is a
   multi-step task; think carefully before answering") and do not ask for the reasoning to be
   written out. **Not in any tag** (neither `<thinking>` nor `<reasoning>`) **nor in a JSON
-  field** named `reasoning` or `thinking`: Anthropic's docs warn the model may decline,
+  field** whatever it is called (`reasoning`, `thinking`, `analysis` or `steps`): Anthropic's docs warn the model may decline,
   OpenAI's docs say "think step by step" is unnecessary for reasoning models, and Gemini 3.x's
   docs prefer short direct instructions because tricks built for older models can push it to
   over-analyze. The field is a way around the rule, not compliance with it. If the user's
@@ -190,7 +209,7 @@ Per-family details are in `references/models.md`.
    gate's questions.
 2. **The language of the model's output:** separate from the prompt's language. An English
    prompt may serve Arabic-speaking users, so state the answer's language explicitly in
-   `<output_format>` or `<constraints>` ("answer in simple Modern Standard Arabic"), and do
+   `<output_format>` or `<constraints>` ("answer in Modern Standard Arabic, in a style that suits the output's audience"), and do
    not leave the model to infer it from the language of the instructions.
 3. **The language you speak to the user in** (questions, assumptions, explanation of
    decisions): the language of their conversation, whatever language the prompt you hand
